@@ -13,5 +13,5 @@ Aircraft
 In this pack you will find:
 
 • Mil Mi-17 Hip
-• McDonnell Douglas F-4
-• General Dynamics F-16
+• McDonnell Douglas F-4 Phantom II
+• General Dynamics F-16 Fighting Falcon
