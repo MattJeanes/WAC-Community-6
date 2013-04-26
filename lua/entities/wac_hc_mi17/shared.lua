@@ -26,7 +26,7 @@ ENT.FirePos            = Vector(-86,0,110)
 
 if CLIENT then
 	ENT.thirdPerson = {
-		distance = 500
+		distance = 660
 	}
 end
 
