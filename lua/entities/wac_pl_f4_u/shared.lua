@@ -1,25 +1,27 @@
 if not wac then return end
 if SERVER then AddCSLuaFile('shared.lua') end
-ENT.Base 				= "wac_pl_base"
+ENT.Base 				= "wac_pl_base_u"
 ENT.Type 				= "anim"
-ENT.Category			= wac.aircraft.spawnCategory
-ENT.PrintName			= "General Dynamics F-16"
+ENT.Category			= wac.aircraft.spawnCategoryU
+ENT.PrintName			= "McDonnell Douglas F-4"
 ENT.Author				= "SentryGunMan"
 
 ENT.Spawnable			= true
 ENT.AdminSpawnable		= true
 
-ENT.Model            = "models/sentry/f16.mdl"
+ENT.Model            = "models/sentry/f4.mdl"
+ENT.RotorPhModel        = "models/props_junk/sawblade001a.mdl"
+ENT.RotorModel        = "models/props_junk/PopCan01a.mdl"
 
 ENT.TopRotorPos        = Vector(0,0,74)
 ENT.TopRotorDir        = 1.0
 ENT.AutomaticFrameAdvance = true
-ENT.EngineForce        = 600
-ENT.Weight            = 12000
+ENT.EngineForce        = 500
+ENT.Weight            = 18825
 ENT.SeatSwitcherPos	= Vector(0,0,0)
 ENT.AngBrakeMul	= 0.02
-ENT.SmokePos        = Vector(-235,0,68)
-ENT.FirePos            = Vector(-235,0,68)
+ENT.SmokePos        = Vector(-155,24,65)
+ENT.FirePos            = Vector(-155,24,65)
 
 if CLIENT then
 	ENT.thirdPerson = {
@@ -29,64 +31,62 @@ end
 
 ENT.WheelInfo={
 	{
-		mdl="models/sentry/f16_bw.mdl",
-		pos=Vector(-66,45.3,12),
+		mdl="models/sentry/f4_bw.mdl",
+		pos=Vector(-43,96,14),
 		friction=10,
 		mass=600,
 	},
 	{
-		mdl="models/sentry/f16_bw.mdl",
-		pos=Vector(-66,-45.3,12),
+		mdl="models/sentry/f4_bw.mdl",
+		pos=Vector(-43,-96,14),
 		friction=10,
 		mass=600,
 	},
 	{
-		mdl="models/sentry/f16_fw.mdl",
-		pos=Vector(86.2,0,10.9),
+		mdl="models/sentry/f4_fw.mdl",
+		pos=Vector(217.25,0,12),
 		friction=10,
 		mass=1200,
 	},
 }
-
 function ENT:AddSeatTable()
     return{
         [1]={
-            Pos=Vector(130,0,70),
-            ExitPos=Vector(130,70,20),
+            Pos=Vector(178,0,75.5),
+            ExitPos=Vector(178,100,40),
             NoHud=true,
 			wep={[1]=wac.aircraft.getWeapon("M134",{
 				Name="M61 Vulcan",
-				Ammo=1022,
-				MaxAmmo=1022,
+				Ammo=1720,
+				MaxAmmo=1720,
 				NextShoot=1,
 				LastShot=0,
 				Gun=1,
-				ShootDelay=0.015,
-				ShootPos=Vector(267.5,4,69),
-
+				ShootDelay=0.013,
 				func=function(self, t, p)
 					if t.NextShoot <= CurTime() then
 						if t.Ammo>0 then
-						local ShootPos
-						if (t.Ammo % 2 == 0) then ShootPos = Vector(100,30,80.75) else ShootPos = Vector(100,-30,80.75) end
+							local ShootPos = Vector(107,0,35)
+							
 							if !t.Shooting then
 								t.Shooting=true
 								t.SStop:Stop()
 								t.SShoot:Play()
 							end
+
 							local bullet={}
 							bullet.Num 		= 1
 							bullet.Src 		= self:LocalToWorld(ShootPos+Vector(self:GetVelocity():Length()*0.6,0,0))
 							bullet.Dir 		= self:GetForward()
 							bullet.Spread 	= Vector(0.023,0.023,0)
 							bullet.Tracer		= 0
-							bullet.Force		= 90
-							bullet.Damage	= 280
+							bullet.Force		= 80
+							bullet.Damage	= 200
 							bullet.Attacker 	= p
 							local effectdata=EffectData()
 							effectdata:SetOrigin(self:LocalToWorld(ShootPos))
 							effectdata:SetAngles(self:GetAngles())
-							effectdata:SetScale(1)
+							effectdata:SetScale(1.5)
 							util.Effect("MuzzleEffect", effectdata)
 							self.Entity:FireBullets(bullet)
 							t.Gun=(t.Gun==1 and 2 or 1)
@@ -101,7 +101,7 @@ function ENT:AddSeatTable()
 						if t.Ammo<=0 then
 							t.StopSounds(self,t,p)
 							t.Ammo=t.MaxAmmo
-							t.NextShoot=CurTime()+60
+							t.NextShoot=CurTime()+20
 						end
 					end
 				end,
@@ -113,8 +113,8 @@ function ENT:AddSeatTable()
 					end
 				end,
 				Init=function(self,t)
-					t.SShoot=CreateSound(self,"WAC/F16/gun.wav")
-					t.SStop=CreateSound(self,"WAC/F16/gun_stop.wav")
+					t.SShoot=CreateSound(self,"WAC/F4/gun.wav")
+					t.SStop=CreateSound(self,"WAC/F4/gun_stop.wav")
 				end,
 				Think=function(self,t,p)
 					if t.NextShoot<=CurTime() then
@@ -125,25 +125,22 @@ function ENT:AddSeatTable()
 					t.StopSounds(self,t,p)
 				end
 				}),
-				[2]=wac.aircraft.getWeapon("Hydra 70",{
-					Name="Hydra 70",
-					Ammo=14,
-					MaxAmmo=14,
-					ShootPos={
-						[1]=Vector(-30,155.75,56.5),
-						[2]=Vector( -30,-155.75,56.5),
-					}
-				}),	
 			},
-		},
-	}
-end
+        },
+        [2]={
+            Pos=Vector(123, 0, 85),
+            ExitPos=Vector(123,100,40),
+            NoHud=true,
+            wep={wac.aircraft.getWeapon("No Weapon")},
+        },
 
+    }
+end
 function ENT:AddSounds()
     self.Sound={
-        Start=CreateSound(self.Entity,"WAC/F16/Start.wav"),
-        Blades=CreateSound(self.Entity,"F16.External"),
-        Engine=CreateSound(self.Entity,"F16.Internal"),
+        Start=CreateSound(self.Entity,"WAC/F4/Start.wav"),
+        Blades=CreateSound(self.Entity,"F4.External"),
+        Engine=CreateSound(self.Entity,"F4.Internal"),
         MissileAlert=CreateSound(self.Entity,""),
         MissileShoot=CreateSound(self.Entity,""),
         MinorAlarm=CreateSound(self.Entity,""),
@@ -151,8 +148,6 @@ function ENT:AddSounds()
         CrashAlarm=CreateSound(self.Entity,""),
     }
 end
-
-
 
 local function DrawLine(v1,v2)
 	surface.DrawLine(v1.y,v1.z,v2.y,v2.z)
@@ -162,7 +157,7 @@ local mHorizon0=Material("WeltEnSTurm/WAC/Helicopter/hud_line_0")
 local HudCol=Color(70,199,50,150)
 local Black=Color(0,0,0,200)
 
-mat={
+local mat={
 	Material("WeltEnSTurm/WAC/Helicopter/hud_line_0"),
 	Material("WeltEnSTurm/WAC/Helicopter/hud_line_high"),
 	Material("WeltEnSTurm/WAC/Helicopter/hud_line_low"),
@@ -178,11 +173,6 @@ local function getspaces(n)
 	end
 	return n
 end
-
-ENT.thirdPerson = {
-	distance = 600,
-	angle = 10
-}
 
 function ENT:DrawPilotHud()
 	local pos = self:GetPos()
@@ -234,7 +224,6 @@ function ENT:DrawPilotHud()
 	
 	surface.SetTextPos(260,425)
 	local n=self:GetNWInt("seat_1_1_ammo")
-
 	if n==14 and self:GetNWFloat("seat_1_1_nextshot")>CurTime() then
 		n=0
 	end
@@ -244,4 +233,3 @@ function ENT:DrawPilotHud()
 end
 
 function ENT:DrawWeaponSelection() end
-

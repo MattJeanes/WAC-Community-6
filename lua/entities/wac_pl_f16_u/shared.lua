@@ -1,8 +1,8 @@
 if not wac then return end
 if SERVER then AddCSLuaFile('shared.lua') end
-ENT.Base 				= "wac_pl_base"
+ENT.Base 				= "wac_pl_base_u"
 ENT.Type 				= "anim"
-ENT.Category			= wac.aircraft.spawnCategory
+ENT.Category			= wac.aircraft.spawnCategoryU
 ENT.PrintName			= "General Dynamics F-16"
 ENT.Author				= "SentryGunMan"
 
