@@ -1,4 +1,4 @@
-WAC-Community-6
+WAC-Community-N
 ===============
 
 A collection of aircraft made for WAC by Dr. Matt and friends.
@@ -16,3 +16,4 @@ In this pack you will find:
 • McDonnell Douglas F-4 Phantom II
 • General Dynamics F-16 Fighting Falcon
 • Boeing F/A-18F Super Hornet
+• AH-1W Super Cobra

@@ -1,0 +1,10 @@
+"VertexlitGeneric"
+{
+	"$basetexture" "sentry/FA18/tiger_glass"
+	"$additive" "1"
+	"$translucent" 1
+	$detail "sentry/FA18/tex_0054_4"
+	$detailscale "1"
+	$detailblendfactor "1.8"
+	$detailblendmode "0"
+}

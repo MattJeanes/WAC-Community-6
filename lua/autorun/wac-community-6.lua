@@ -98,3 +98,19 @@ sound.Add(
 	soundlevel = 100,
 	sound = "WAC/FA18/internal.wav"
 })
+
+sound.Add(
+{
+	name = "AH1W.External",
+	channel = CHAN_STATIC,
+	soundlevel = 180,
+	sound = "WAC/ah1w/ah1w_external.wav"
+})
+
+sound.Add(
+{
+	name = "AH1W.Internal",
+	channel = CHAN_STATIC,
+	soundlevel = 100,
+	sound = "WAC/ah1w/ah1w_internal.wav"
+})
