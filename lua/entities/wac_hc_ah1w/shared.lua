@@ -2,7 +2,7 @@ if not wac then return end
 
 ENT.Base = "wac_hc_base"
 ENT.Type = "anim"
-ENT.Author = Chippy
+ENT.Author = "Chippy"
 ENT.Category = wac.aircraft.spawnCategory
 ENT.Spawnable = true
 ENT.AdminSpawnable = true
@@ -20,54 +20,69 @@ ENT.BackRotorPos	= Vector(-432.5,-11.06,63)
 ENT.BackRotorDir	= -1
 ENT.SmokePos		= Vector(-177,0,28)
 ENT.FirePos			= Vector(-177,-12,28)
-ENT.ThirdPDist		= 500
 
-function ENT:AddSeatTable()
-	return{
-		[1]={
-			Pos=Vector(39, 1.2, -1.3),
-			ExitPos=Vector(72,70,0),
-			wep={
-				[1]=wac.aircraft.getWeapon("Hydra 70",{
-					ShootPos={
-						[1]=Vector(40.25,36.33,-20.93),
-						[2]=Vector(40.25,-36.33,-20.93),
-					}
-				}),
-			},
-		},
-		[2]={
-			Pos=Vector(100, 1., -10),
-			ExitPos=Vector(120,70,0),
-			wep={
-				[1]=wac.aircraft.getWeapon("No Weapon"),
-				[2]=wac.aircraft.getWeapon("M197",{
-
-		Init=function(self,t)
-			self.Sound.GunSound1=CreateSound(self,"utes.wav")
-			self.Sound.GunSound2=CreateSound(self,"utes.wav")
-			self.Sound.GunSoundSpin=CreateSound(self,"WAC/cannon/viper_cannon_rotate.wav")
-			self.Sound.GunSoundSpin:Play()
-			self.Sound.GunSoundSpin:ChangePitch(0,0.1)
-			self.Sound.GunSoundSpin:ChangeVolume(0,0.1)
-		end,
-
-	}),
-				[3]=wac.aircraft.getWeapon("Hellfire"),
-			},
-		},
+if CLIENT then
+	ENT.thirdPerson={
+		distance=600
 	}
 end
 
-function ENT:AddSounds()
-	self.Sound={
-		Start=CreateSound(self.Entity,"ah1w_startup.wav"),
-		Blades=CreateSound(self.Entity,"ah1w_external.wav"),--"npc/attack_helicopter/aheli_rotor_loop1.wav"),
-		Engine=CreateSound(self.Entity,"ah1w_internal.wav"),
-		MissileAlert=CreateSound(self.Entity,"HelicopterVehicle/MissileNearby.mp3"),
-		MissileShoot=CreateSound(self.Entity,"HelicopterVehicle/MissileShoot.mp3"),
-		MinorAlarm=CreateSound(self.Entity,"ah1w_lowhealth.wav"),
-		LowHealth=CreateSound(self.Entity,"ah1w_lowhealth.wav"),
-		CrashAlarm=CreateSound(self.Entity,"ah1w_boom.wav"),
-	}
-end
+ENT.Seats = {
+	{
+		pos=Vector(39, 1.2, -1.3),
+		exit=Vector(72,70,0),
+	},
+	{
+		pos=Vector(100, 1, -10),
+		exit=Vector(120,70,0),
+	},
+}
+
+ENT.Sounds={
+	Start="ah1w_startup.wav",
+	Blades="ah1w_external.wav",
+	Engine="ah1w_internal.wav",
+	MissileAlert="HelicopterVehicle/MissileNearby.mp3",
+	MissileShoot="HelicopterVehicle/MissileShoot.mp3",
+	MinorAlarm="ah1w_lowhealth.wav",
+	LowHealth="ah1w_lowhealth.wav",
+	CrashAlarm="ah1w_boom.wav"
+}
+
+ENT.WeaponAttachments={
+
+	gunMount1 = {
+		model = "models/BF2/helicopters/AH-1 Cobra/ah1z_g1.mdl",
+		pos = Vector(107.5,0,-30.5),
+	},
+	
+	gunMount2 = {
+		model = "models/BF2/helicopters/AH-1 Cobra/ah1z_g2.mdl",
+		pos = Vector(111,0,-37),
+		localTo = "gunMount1",
+	},
+	
+	gun = {
+		model = "models/BF2/helicopters/AH-1 Cobra/ah1z_g.mdl",
+		pos = Vector(111,0,-37),
+		localTo = "gunMount2",
+	},
+	
+	radar1 = {
+		model = "models/chippy/ah1w/tgp.mdl",
+		pos = Vector(160,0,-15),
+	},
+	
+}
+
+ENT.Camera = {
+	model = "models/props_junk/popcan01a.mdl",
+	pos = Vector(160,0,-15),
+	offset = Vector(-1,0,0),
+	viewPos = Vector(2, 0, 3.5),
+	maxAng = Angle(45, 90, 0),
+	minAng = Angle(-2, -90, 0),
+	seat = 2
+}
+
+function ENT:DrawWeaponSelection() end

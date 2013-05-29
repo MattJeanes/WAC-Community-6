@@ -13,7 +13,7 @@ ENT.Model            = "models/sentry/f4.mdl"
 ENT.RotorPhModel        = "models/props_junk/sawblade001a.mdl"
 ENT.RotorModel        = "models/props_junk/PopCan01a.mdl"
 
-ENT.TopRotorPos        = Vector(0,0,74)
+ENT.rotorPos        = Vector(0,0,74)
 ENT.TopRotorDir        = 1.0
 ENT.AutomaticFrameAdvance = true
 ENT.EngineForce        = 500
@@ -29,7 +29,7 @@ if CLIENT then
 	}
 end
 
-ENT.WheelInfo={
+ENT.Wheels={
 	{
 		mdl="models/sentry/f4_bw.mdl",
 		pos=Vector(-43,96,14),
@@ -49,187 +49,27 @@ ENT.WheelInfo={
 		mass=1200,
 	},
 }
-function ENT:AddSeatTable()
-    return{
-        [1]={
-            Pos=Vector(178,0,75.5),
-            ExitPos=Vector(178,100,40),
-            NoHud=true,
-			wep={[1]=wac.aircraft.getWeapon("M134",{
-				Name="M61 Vulcan",
-				Ammo=1720,
-				MaxAmmo=1720,
-				NextShoot=1,
-				LastShot=0,
-				Gun=1,
-				ShootDelay=0.013,
-				func=function(self, t, p)
-					if t.NextShoot <= CurTime() then
-						if t.Ammo>0 then
-							local ShootPos = Vector(107,0,35)
-							
-							if !t.Shooting then
-								t.Shooting=true
-								t.SStop:Stop()
-								t.SShoot:Play()
-							end
 
-							local bullet={}
-							bullet.Num 		= 1
-							bullet.Src 		= self:LocalToWorld(ShootPos+Vector(self:GetVelocity():Length()*0.6,0,0))
-							bullet.Dir 		= self:GetForward()
-							bullet.Spread 	= Vector(0.023,0.023,0)
-							bullet.Tracer		= 0
-							bullet.Force		= 80
-							bullet.Damage	= 200
-							bullet.Attacker 	= p
-							local effectdata=EffectData()
-							effectdata:SetOrigin(self:LocalToWorld(ShootPos))
-							effectdata:SetAngles(self:GetAngles())
-							effectdata:SetScale(1.5)
-							util.Effect("MuzzleEffect", effectdata)
-							self.Entity:FireBullets(bullet)
-							t.Gun=(t.Gun==1 and 2 or 1)
-							t.Ammo=t.Ammo-1
-							t.LastShot=CurTime()
-							t.NextShoot=t.LastShot+t.ShootDelay
-							local ph=self:GetPhysicsObject()
-							if ph:IsValid() then
-								ph:AddAngleVelocity(Vector(0,0,t.Gun==1 and 3 or -3))
-							end
-						end
-						if t.Ammo<=0 then
-							t.StopSounds(self,t,p)
-							t.Ammo=t.MaxAmmo
-							t.NextShoot=CurTime()+20
-						end
-					end
-				end,
-				StopSounds=function(self,t,p)
-					if t.Shooting then
-						t.SShoot:Stop()
-						t.SStop:Play()
-						t.Shooting=false
-					end
-				end,
-				Init=function(self,t)
-					t.SShoot=CreateSound(self,"WAC/F4/gun.wav")
-					t.SStop=CreateSound(self,"WAC/F4/gun_stop.wav")
-				end,
-				Think=function(self,t,p)
-					if t.NextShoot<=CurTime() then
-						t.StopSounds(self,t,p)
-					end
-				end,
-				DeSelect=function(self,t,p)
-					t.StopSounds(self,t,p)
-				end
-				}),
-			},
-        },
-        [2]={
-            Pos=Vector(123, 0, 85),
-            ExitPos=Vector(123,100,40),
-            NoHud=true,
-            wep={wac.aircraft.getWeapon("No Weapon")},
-        },
-
-    }
-end
-function ENT:AddSounds()
-    self.Sound={
-        Start=CreateSound(self.Entity,"WAC/F4/Start.wav"),
-        Blades=CreateSound(self.Entity,"F4.External"),
-        Engine=CreateSound(self.Entity,"F4.Internal"),
-        MissileAlert=CreateSound(self.Entity,""),
-        MissileShoot=CreateSound(self.Entity,""),
-        MinorAlarm=CreateSound(self.Entity,""),
-        LowHealth=CreateSound(self.Entity,""),
-        CrashAlarm=CreateSound(self.Entity,""),
-    }
-end
-
-local function DrawLine(v1,v2)
-	surface.DrawLine(v1.y,v1.z,v2.y,v2.z)
-end
-
-local mHorizon0=Material("WeltEnSTurm/WAC/Helicopter/hud_line_0")
-local HudCol=Color(70,199,50,150)
-local Black=Color(0,0,0,200)
-
-local mat={
-	Material("WeltEnSTurm/WAC/Helicopter/hud_line_0"),
-	Material("WeltEnSTurm/WAC/Helicopter/hud_line_high"),
-	Material("WeltEnSTurm/WAC/Helicopter/hud_line_low"),
+ENT.Seats = {
+	{
+		pos=Vector(178,0,75.5),
+		exit=Vector(178,100,40),
+	},
+	{
+		pos=Vector(123, 0, 85),
+		exit=Vector(123,100,40),
+	},
 }
 
-local function getspaces(n)
-	if n<10 then
-		n="      "..n
-	elseif n<100 then
-		n="    "..n
-	elseif n<1000 then
-		n="  "..n
-	end
-	return n
-end
-
-function ENT:DrawPilotHud()
-	local pos = self:GetPos()
-	local ang = self:GetAngles()
-	ang:RotateAroundAxis(self:GetRight(), 90)
-	ang:RotateAroundAxis(self:GetForward(), 90)
-	
-	local uptm = self.SmoothVal
-	local upm = self.SmoothUp
-	local spos=self.SeatsT[1].Pos
-
-	cam.Start3D2D(self:LocalToWorld(Vector(28,3.75,37.75)+spos), ang,0.015)
-	surface.SetDrawColor(HudCol)
-	surface.DrawRect(234, 247, 10, 4)
-	surface.DrawRect(254, 247, 10, 4)
-	surface.DrawRect(247, 234, 4, 10)
-	surface.DrawRect(247, 254, 4, 10)
-	
-	local a=self:GetAngles()
-	a.y=0
-	local up=a:Up()
-	up.x=0
-	up=up:GetNormal()
-	
-	local size=180
-	local dist=10
-	local step=12
-	for p=-180,180,step do
-		if a.p+p>-size/dist and a.p+p<size/dist then
-			if p==0 then
-				surface.SetMaterial(mat[1])
-			elseif p>0 then
-				surface.SetMaterial(mat[2])
-			else
-				surface.SetMaterial(mat[3])
-			end
-			surface.DrawTexturedRectRotated(250+up.y*(a.p+p)*dist,250-up.z*(a.p+p)*dist,300,300,a.r)
-		end
-	end
-	
-	surface.SetTextColor(HudCol)
-	surface.SetFont("wac_heli_small")
-	
-	surface.SetTextPos(80, 390) 
-	surface.DrawText("SPD  "..math.floor(self:GetVelocity():Length()*0.1) .."kn")
-	surface.SetTextPos(80, 425)
-	local tr=util.QuickTrace(pos+self:GetUp()*10,Vector(0,0,-999999),self.Entity)
-	surface.DrawText("ALT  "..math.ceil((pos.z-tr.HitPos.z)*0.01905).."m")
-	
-	surface.SetTextPos(260,425)
-	local n=self:GetNWInt("seat_1_1_ammo")
-	if n==14 and self:GetNWFloat("seat_1_1_nextshot")>CurTime() then
-		n=0
-	end
-	surface.DrawText("M61 Vulcan"..getspaces(n))
-	
-	cam.End3D2D()
-end
+ENT.Sounds={
+	Start="WAC/F4/Start.wav",
+	Blades="F4.External",
+	Engine="F4.Internal",
+	MissileAlert="HelicopterVehicle/MissileNearby.mp3",
+	MissileShoot="HelicopterVehicle/MissileShoot.mp3",
+	MinorAlarm="HelicopterVehicle/MinorAlarm.mp3",
+	LowHealth="HelicopterVehicle/LowHealth.mp3",
+	CrashAlarm="HelicopterVehicle/CrashAlarm.mp3"
+}
 
 function ENT:DrawWeaponSelection() end
