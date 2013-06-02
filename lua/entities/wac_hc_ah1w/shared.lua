@@ -31,10 +31,12 @@ ENT.Seats = {
 	{
 		pos=Vector(39, 1.2, -1.3),
 		exit=Vector(72,70,0),
+		weapons = {"Hydra 70"},
 	},
 	{
 		pos=Vector(100, 1, -10),
 		exit=Vector(120,70,0),
+		weapons = {"Hellfire", "M197"},
 	},
 }
 
@@ -49,11 +51,41 @@ ENT.Sounds={
 	CrashAlarm="ah1w_boom.wav"
 }
 
+ENT.Weapons = {
+	["Hydra 70"] = {
+		class = "wac_pod_hydra",
+		info = {
+			Sequential = false,
+			Pods = {
+				Vector(35, 45, -20),
+				Vector(35, -45, -20)
+			}
+		}
+	},
+	["Hellfire"] = {
+		class = "wac_pod_hellfire",
+		info = {
+			Pods = {
+				Vector(50, 60, -20),
+				Vector(50, -60, -20),
+			}
+		}
+	},
+	["M197"] = {
+		class = "wac_pod_aimedgun",
+		info = {
+			ShootPos = Vector(110, 2, -33),
+			ShootOffset = Vector(60, 0, 0),
+		}
+	},
+}
+
 ENT.WeaponAttachments={
 
 	gunMount1 = {
 		model = "models/BF2/helicopters/AH-1 Cobra/ah1z_g1.mdl",
 		pos = Vector(107.5,0,-30.5),
+		restrictPitch=true,
 	},
 	
 	gunMount2 = {
@@ -71,6 +103,7 @@ ENT.WeaponAttachments={
 	radar1 = {
 		model = "models/chippy/ah1w/tgp.mdl",
 		pos = Vector(160,0,-15),
+		restrictPitch=true
 	},
 	
 }
@@ -79,7 +112,7 @@ ENT.Camera = {
 	model = "models/props_junk/popcan01a.mdl",
 	pos = Vector(160,0,-15),
 	offset = Vector(-1,0,0),
-	viewPos = Vector(2, 0, 3.5),
+	viewPos = Vector(10, 0, 0),
 	maxAng = Angle(45, 90, 0),
 	minAng = Angle(-2, -90, 0),
 	seat = 2
