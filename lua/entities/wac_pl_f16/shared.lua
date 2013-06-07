@@ -3,7 +3,7 @@ if SERVER then AddCSLuaFile('shared.lua') end
 ENT.Base 				= "wac_pl_base"
 ENT.Type 				= "anim"
 ENT.Category			= wac.aircraft.spawnCategory
-ENT.PrintName			= "General Dynamics F-16"
+ENT.PrintName			= "F-16C Falcon"
 ENT.Author				= "SentryGunMan"
 
 ENT.Spawnable			= true
@@ -28,6 +28,10 @@ if CLIENT then
 		distance = 550
 	}
 end
+
+ENT.Agility = {
+	Thrust = 15
+}
 
 ENT.Wheels={
 	{

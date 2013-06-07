@@ -15,7 +15,7 @@ end
 
 ENT.Aerodynamics = {
 	Rotation = {
-		Front = Vector(0, -0.075, 0),
+		Front = Vector(0, -1.5, 0),
 		Right = Vector(0, 0, 70), -- Rotate towards flying direction
 		Top = Vector(0, 0, 0)
 	},
@@ -27,7 +27,7 @@ ENT.Aerodynamics = {
 	Rail = Vector(1, 5, 20),
 	Drag = {
 		Directional = Vector(0.01, 0.01, 0.01),
-		Angular = Vector(0.01, 0.01, 0.01)
+		Angular = Vector(0.05, 0.1, 0.1)
 	}
 }
 
@@ -47,7 +47,7 @@ function ENT:PhysicsUpdate(ph)
 	local trace=util.QuickTrace(self:LocalToWorld(Vector(0,0,62)), self:LocalToWorld(Vector(0,0,50)), {self, self.wheels[1], self.wheels[2], self.wheels[3], self.rotor})
 	local phys=self:GetPhysicsObject()
 	if IsValid(phys) and not self.disabled then
-		if self.controls.throttle>0.9 and self.rotorRpm>0.8 and phys:GetVelocity():Length() > 1600 and trace.HitPos:Distance( self:LocalToWorld(Vector(0,0,62)) ) > 50  and self:GetSequence() != gearup then
+		if self.controls.throttle>0.9 and self.rotorRpm>0.8 and phys:GetVelocity():Length() > 1200 and trace.HitPos:Distance( self:LocalToWorld(Vector(0,0,62)) ) > 50  and self:GetSequence() != gearup then
 			self:ResetSequence(gearup) 
 			self:SetPlaybackRate(1.0)
 			self:SetBodygroup(1,1)
