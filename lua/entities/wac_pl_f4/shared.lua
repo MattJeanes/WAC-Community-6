@@ -58,10 +58,27 @@ ENT.Seats = {
 	{
 		pos=Vector(178,0,75.5),
 		exit=Vector(178,100,40),
+		weapons={"M61 Vulcan"},
 	},
 	{
 		pos=Vector(123, 0, 85),
 		exit=Vector(123,100,40),
+	},
+}
+
+ENT.Weapons = {
+	["M61 Vulcan"] = {
+		class = "wac_pod_gatling",
+		info = {
+			Pods = {
+				Vector(107,0,35),
+				Vector(107,0,35),
+			},
+			Sounds = {
+				shoot = "WAC/f4/gun.wav",
+				stop = "WAC/f4/gun_stop.wav"
+			}
+		}
 	},
 }
 
@@ -75,5 +92,25 @@ ENT.Sounds={
 	LowHealth="HelicopterVehicle/LowHealth.mp3",
 	CrashAlarm="HelicopterVehicle/CrashAlarm.mp3"
 }
+
+// heatwave
+if CLIENT then
+	local cureffect=0
+	function ENT:Think()
+		self:base("wac_pl_base").Think(self)
+		local throttle = self:GetNWFloat("up", 0)
+		local active = self:GetNWBool("active", false)
+		local ent=LocalPlayer():GetVehicle():GetNWEntity("wac_aircraft")
+		if ent==self and active and throttle > 0.2 and CurTime()>cureffect then
+			cureffect=CurTime()+0.02
+			local ed=EffectData()
+			ed:SetEntity(self)
+			ed:SetOrigin(Vector(-155,0,65)) // offset
+			ed:SetMagnitude(throttle)
+			ed:SetRadius(30)
+			util.Effect("wac_heatwave", ed)
+		end
+	end
+end
 
 function ENT:DrawWeaponSelection() end

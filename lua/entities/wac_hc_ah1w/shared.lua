@@ -40,17 +40,6 @@ ENT.Seats = {
 	},
 }
 
-ENT.Sounds={
-	Start="ah1w_startup.wav",
-	Blades="ah1w_external.wav",
-	Engine="ah1w_internal.wav",
-	MissileAlert="HelicopterVehicle/MissileNearby.mp3",
-	MissileShoot="HelicopterVehicle/MissileShoot.mp3",
-	MinorAlarm="ah1w_lowhealth.wav",
-	LowHealth="ah1w_lowhealth.wav",
-	CrashAlarm="ah1w_boom.wav"
-}
-
 ENT.Weapons = {
 	["Hydra 70"] = {
 		class = "wac_pod_hydra",
@@ -116,6 +105,17 @@ ENT.Camera = {
 	maxAng = Angle(45, 90, 0),
 	minAng = Angle(-2, -90, 0),
 	seat = 2
+}
+
+ENT.Sounds={
+	Start="wac/ah1w/startup.wav",
+	Blades="wac/ah1w/external.wav",
+	Engine="wac/ah1w/internal.wav",
+	MissileAlert="HelicopterVehicle/MissileNearby.mp3",
+	MissileShoot="HelicopterVehicle/MissileShoot.mp3",
+	MinorAlarm="wac/ah1w/lowhealth.wav",
+	LowHealth="wac/ah1w/lowhealth.wav",
+	CrashAlarm="wac/ah1w/explode.wav"
 }
 
 function ENT:DrawWeaponSelection() end

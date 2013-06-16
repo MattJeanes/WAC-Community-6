@@ -33,14 +33,6 @@ ENT.Aerodynamics = {
 
 function ENT:PhysicsUpdate(ph)
 	self:base("wac_pl_base").PhysicsUpdate(self,ph)
-
-	if self.rotorRpm > 0.8 and self.rotorRpm < 0.89 and IsValid(self.rotorModel) then
-		self.rotorModel:SetBodygroup(1,1)
-	elseif self.rotorRpm > 0.9 and IsValid(self.rotorModel) then
-		self.rotorModel:SetBodygroup(1,2)
-	elseif self.rotorRpm < 0.8 and IsValid(self.rotorModel) then
-		self.rotorModel:SetBodygroup(1,0)
-	end
 	
 	local geardown,t1=self:LookupSequence("geardown")
 	local gearup,t2=self:LookupSequence("gearup")	

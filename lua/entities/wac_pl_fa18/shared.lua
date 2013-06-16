@@ -1,5 +1,6 @@
 if not wac then return end
 if SERVER then AddCSLuaFile('shared.lua') end
+
 ENT.Base 				= "wac_pl_base"
 ENT.Type 				= "anim"
 ENT.Category			= wac.aircraft.spawnCategory
@@ -22,6 +23,7 @@ ENT.SeatSwitcherPos	= Vector(0,0,0)
 ENT.AngBrakeMul	= 0.05
 ENT.SmokePos        = Vector(-330,21,85)
 ENT.FirePos            = Vector(-330,21,85)
+ENT.BurnerOffset		= Vector(-330,0,85)
 
 if CLIENT then
 	ENT.thirdPerson = {
@@ -73,6 +75,10 @@ ENT.Weapons = {
 			Pods = {
 				Vector(305,0,100)
 			},
+			Sounds = {
+				shoot = "WAC/fa18/gun.wav",
+				stop = "WAC/fa18/gun_stop.wav"
+			}
 		}
 	},
 }
@@ -87,6 +93,28 @@ ENT.Sounds={
 	LowHealth="HelicopterVehicle/LowHealth.mp3",
 	CrashAlarm="HelicopterVehicle/CrashAlarm.mp3"
 }
+
+// heatwave
+if CLIENT then
+	local cureffect=0
+	function ENT:Think()
+		self:base("wac_pl_base").Think(self)
+		local throttle = self:GetNWFloat("up", 0)
+		local active = self:GetNWBool("active", false)
+		local ent=LocalPlayer():GetVehicle():GetNWEntity("wac_aircraft")
+		if ent==self and active and throttle > 0.2 and CurTime()>cureffect then
+			cureffect=CurTime()+0.02
+			local ed=EffectData()
+			ed:SetEntity(self)
+			ed:SetOrigin(Vector(-320,0,85)) // offset
+			ed:SetMagnitude(throttle)
+			ed:SetRadius(30)
+			util.Effect("wac_heatwave", ed)
+		end
+	end
+end
+
+//hud
 
 local function DrawLine(v1,v2)
 	surface.DrawLine(v1.y,v1.z,v2.y,v2.z)
