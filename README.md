@@ -1,4 +1,4 @@
-WAC-Community-N
+WAC-Community-6
 ===============
 
 A collection of aircraft made for WAC by Dr. Matt and friends.
@@ -12,8 +12,8 @@ Aircraft
 ===============
 In this pack you will find:
 
-• Mil Mi-17 Hip
-• F-4 Phantom II
-• F-16C Falcon
-• F/A-18F Super Hornet
-• AH-1W Super Cobra
+ï¿½ Mil Mi-17 Hip
+ï¿½ F-4 Phantom II
+ï¿½ F-16C Falcon
+ï¿½ F/A-18F Super Hornet
+ï¿½ AH-1W Super Cobra
