@@ -1,4 +1,4 @@
-WAC-Community-6
+WAC-Community-N
 ===============
 
 A collection of aircraft made for WAC by Dr. Matt and friends.

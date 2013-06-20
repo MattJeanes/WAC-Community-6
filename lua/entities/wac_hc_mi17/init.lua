@@ -30,8 +30,8 @@ function ENT:SpawnFunction(ply, tr)
 	local skin = math.random(0,5)
 	ent:SetSkin(skin)
 	ent.Owner=ply	
-	ent.BackRotor:SetSkin(skin)
-	ent.TopRotorModel:SetSkin(skin)
+	ent.backRotor:SetSkin(skin)
+	ent.topRotor.vis:SetSkin(skin)
 	for i=1,3 do 
 		ent.wheels[i]:SetSkin(skin)
 	end

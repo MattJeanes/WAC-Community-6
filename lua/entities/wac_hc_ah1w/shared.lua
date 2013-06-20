@@ -6,26 +6,27 @@ ENT.Author = "Chippy"
 ENT.Category = wac.aircraft.spawnCategory
 ENT.Spawnable = true
 ENT.AdminSpawnable = true
-
 ENT.PrintName		= "AH-1W Super Cobra"
 
 ENT.Model			= "models/chippy/ah1w/body.mdl"
-ENT.RotorPhModel	= "models/props_junk/sawblade001a.mdl"
-ENT.RotorModel		= "models/chippy/ah1w/mainrotor.mdl"
-ENT.BackRotorModel	= "models/chippy/ah1w/tailrotor.mdl"
-
-ENT.TopRotorPos		= Vector(-29,2,65)
-ENT.TopRotorDir		= -1
-ENT.BackRotorPos	= Vector(-432.5,-11.06,63)
-ENT.BackRotorDir	= -1
 ENT.SmokePos		= Vector(-177,0,28)
 ENT.FirePos			= Vector(-177,-12,28)
 
-if CLIENT then
-	ENT.thirdPerson={
-		distance=600
-	}
-end
+ENT.TopRotor = {
+	dir = -1,
+	pos = Vector(-29,2,65),
+	model = "models/chippy/ah1w/mainrotor.mdl"
+}
+
+ENT.BackRotor = {
+	dir = -1,
+	pos = Vector(-432.5,-11.06,63),
+	model = "models/chippy/ah1w/tailrotor.mdl"
+}
+
+ENT.thirdPerson={
+	distance = 600
+}
 
 ENT.Seats = {
 	{
@@ -44,7 +45,7 @@ ENT.Weapons = {
 	["Hydra 70"] = {
 		class = "wac_pod_hydra",
 		info = {
-			Sequential = false,
+			Sequential = true,
 			Pods = {
 				Vector(35, 45, -20),
 				Vector(35, -45, -20)
