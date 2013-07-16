@@ -33,7 +33,7 @@ end)
 
 if not found then return end
 
-wac.aircraft.spawnCategoryU = "WAC Unbreakable"
+if wac and wac.aircraft then wac.aircraft.spawnCategoryU = "WAC Unbreakable" end
 
 sound.Add(
 {
@@ -113,4 +113,20 @@ sound.Add(
 	channel = CHAN_STATIC,
 	soundlevel = 100,
 	sound = "WAC/ah1w/ah1w_internal.wav"
+})
+
+sound.Add(
+{
+	name = "FW190.External",
+	channel = CHAN_STATIC,
+	soundlevel = 110,
+	sound = "WAC/fw190/external.wav"
+})
+
+sound.Add(
+{
+	name = "FW190.Internal",
+	channel = CHAN_STATIC,
+	soundlevel = 60,
+	sound = "WAC/fw190/internal.wav"
 })
