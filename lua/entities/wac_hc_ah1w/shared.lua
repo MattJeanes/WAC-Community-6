@@ -25,7 +25,8 @@ ENT.BackRotor = {
 }
 
 ENT.thirdPerson={
-	distance = 600
+	distance = 700,
+	position = Vector(0,0,50)
 }
 
 ENT.Seats = {

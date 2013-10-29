@@ -63,6 +63,7 @@ ENT.Seats = {
 	{
 		pos=Vector(123, 0, 85),
 		exit=Vector(123,100,40),
+		weapons={"Bomb"}
 	},
 }
 
@@ -80,6 +81,20 @@ ENT.Weapons = {
 			}
 		}
 	},
+	["Bomb"] = {
+		class = "wac_pod_bomb",
+		info = {
+			Pods = {
+				Vector(40,75,20),
+				Vector(40,-75,20),
+				Vector(40,60,40),
+				Vector(40,90,40),
+				Vector(40,-60,40),
+				Vector(40,-90,40),
+			},
+			model="models/props_phx/ww2bomb.mdl",
+		}
+	}
 }
 
 ENT.Sounds={
@@ -113,4 +128,4 @@ if CLIENT then
 	end
 end
 
-function ENT:DrawWeaponSelection() end
+//function ENT:DrawWeaponSelection() end
