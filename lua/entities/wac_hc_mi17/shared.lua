@@ -95,9 +95,9 @@ ENT.Seats = {
 }
 
 ENT.Sounds={
-	Start="WAC/MI17/start.wav",
-	Blades="MI17.External",
-	Engine="MI17.Internal",
+	Start="WAC/mi17/start.wav",
+	Blades="WAC/mi17/external.wav",
+	Engine="WAC/mi17/internal.wav",
 	MissileAlert="HelicopterVehicle/MissileNearby.mp3",
 	MissileShoot="HelicopterVehicle/MissileShoot.mp3",
 	MinorAlarm="HelicopterVehicle/MinorAlarm.mp3",

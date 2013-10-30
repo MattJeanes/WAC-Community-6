@@ -84,9 +84,9 @@ ENT.Weapons = {
 }
 
 ENT.Sounds={
-	Start="WAC/FA18/Start.wav",
-	Blades="FA18.External",
-	Engine="FA18.Internal",
+	Start="WAC/fa18/Start.wav",
+	Blades="WAC/fa18/external.wav",
+	Engine="WAC/fa18/internal.wav",
 	MissileAlert="HelicopterVehicle/MissileNearby.mp3",
 	MissileShoot="HelicopterVehicle/MissileShoot.mp3",
 	MinorAlarm="HelicopterVehicle/MinorAlarm.mp3",
@@ -97,8 +97,12 @@ ENT.Sounds={
 // heatwave
 if CLIENT then
 	local cureffect=0
+	function ENT:Initialize()
+		self:base("wac_pl_base").Initialize(self)
+	end
 	function ENT:Think()
 		self:base("wac_pl_base").Think(self)
+		
 		local throttle = self:GetNWFloat("up", 0)
 		local active = self:GetNWBool("active", false)
 		local ent=LocalPlayer():GetVehicle():GetNWEntity("wac_aircraft")

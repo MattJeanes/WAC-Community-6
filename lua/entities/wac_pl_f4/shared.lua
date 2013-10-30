@@ -98,9 +98,9 @@ ENT.Weapons = {
 }
 
 ENT.Sounds={
-	Start="WAC/F4/Start.wav",
-	Blades="F4.External",
-	Engine="F4.Internal",
+	Start="WAC/f4/Start.wav",
+	Blades="WAC/f4/external.wav",
+	Engine="WAC/f4/internal.wav",
 	MissileAlert="HelicopterVehicle/MissileNearby.mp3",
 	MissileShoot="HelicopterVehicle/MissileShoot.mp3",
 	MinorAlarm="HelicopterVehicle/MinorAlarm.mp3",
