@@ -33,6 +33,7 @@ end)
 
 if not found then return end
 
+<<<<<<< HEAD
 if wac and wac.aircraft then wac.aircraft.spawnCategoryU = "WAC Unbreakable" end
 
 sound.Add(
@@ -130,3 +131,6 @@ sound.Add(
 	soundlevel = 60,
 	sound = "WAC/fw190/internal.wav"
 })
+=======
+wac.aircraft.spawnCategoryU = "WAC Unbreakable"
+>>>>>>> beta

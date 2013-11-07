@@ -13,8 +13,8 @@ Aircraft
 In this pack you will find:
 
 • Mil Mi-17 Hip
-• McDonnell Douglas F-4 Phantom II
-• General Dynamics F-16 Fighting Falcon
-• Boeing F/A-18F Super Hornet
+• F-4 Phantom II
+• F-16C Falcon
+• F/A-18F Super Hornet
 • AH-1W Super Cobra
 • Fw 190A-5 Würger

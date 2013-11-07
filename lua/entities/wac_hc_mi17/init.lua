@@ -1,6 +1,9 @@
 include("shared.lua")
 AddCSLuaFile("shared.lua")
-function ENT:CustomPhysicsUpdate(ph)
+
+function ENT:PhysicsUpdate(ph)
+	self:base("wac_hc_base").PhysicsUpdate(self,ph)
+
 	if self.rotorRpm > 0.6 and self.rotorRpm < 0.79 and IsValid(self.TopRotorModel) then
 		self.TopRotorModel:SetBodygroup(1,1)
 	elseif self.rotorRpm > 0.8 and IsValid(self.TopRotorModel) then
@@ -24,15 +27,14 @@ function ENT:SpawnFunction(ply, tr)
 	ent:SetPos(tr.HitPos+tr.HitNormal*10)
 	ent:Spawn()
 	ent:Activate()
-	local Skin = math.random( 0, 5 );
-	ent:SetSkin(Skin)
+	local skin = math.random(0,5)
+	ent:SetSkin(skin)
 	ent.Owner=ply	
-	ent.BackRotor:SetSkin(Skin)
-	ent.TopRotorModel:SetSkin(Skin)
+	ent.backRotor:SetSkin(skin)
+	ent.topRotor.vis:SetSkin(skin)
 	for i=1,3 do 
-		ent.Wheels[i]:SetSkin(Skin)
+		ent.wheels[i]:SetSkin(skin)
 	end
-	self.Sounds=table.Copy(sndt)
 	return ent
 end
 

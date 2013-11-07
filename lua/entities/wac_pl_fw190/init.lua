@@ -10,12 +10,18 @@ function ENT:SpawnFunction(ply, tr)
 	ent.Owner=ply
     ent:SetSkin(math.random(0,1))
 	ent:SetBodygroup(3,1)
+<<<<<<< HEAD
 	self.Sounds=table.Copy(sndt)
 	return ent
 end
 
 ENT.AutomaticFrameAdvance = true // needed for gear anims
 
+=======
+	return ent
+end
+
+>>>>>>> beta
 ENT.Aerodynamics = {
 	Rotation = {
 		Front = Vector(0, -0.075, 0),
@@ -30,6 +36,7 @@ ENT.Aerodynamics = {
 	Rail = Vector(1, 5, 20)
 }
 
+<<<<<<< HEAD
 function ENT:CustomPhysicsUpdate(ph)
 	if self.rotorRpm > 0.5 and self.rotorRpm < 0.89 and IsValid(self.TopRotorModel) then
 		self.TopRotorModel:SetBodygroup(1,2)
@@ -40,6 +47,20 @@ function ENT:CustomPhysicsUpdate(ph)
 	end
 	
 	if self.Active then
+=======
+function ENT:PhysicsUpdate(ph)
+	self:base("wac_pl_base").PhysicsUpdate(self,ph)
+
+	if self.rotorRpm > 0.5 and self.rotorRpm < 0.89 and IsValid(self.rotorModel) then
+		self.rotorModel:SetBodygroup(1,2)
+	elseif self.rotorRpm > 0.9 and IsValid(self.rotorModel) then
+		self.rotorModel:SetBodygroup(1,2)
+	elseif self.rotorRpm < 0.8 and IsValid(self.rotorModel) then
+		self.rotorModel:SetBodygroup(1,1)
+	end
+	
+	if self.active then
+>>>>>>> beta
 		self:SetBodygroup(3,0)
 	else
 		self:SetBodygroup(3,1)
@@ -50,11 +71,16 @@ function ENT:CustomPhysicsUpdate(ph)
 	local trace=util.QuickTrace(self:LocalToWorld(Vector(0,0,62)), self:LocalToWorld(Vector(0,0,50)), {self, self.Wheels[1], self.Wheels[2], self.Wheels[3], self.TopRotor})
 	local phys=self:GetPhysicsObject()
 	if IsValid(phys) and not self.disabled then
+<<<<<<< HEAD
 		if self.upMul>0.9 and self.rotorRpm>0.8 and phys:GetVelocity():Length() > 1299 and trace.HitPos:Distance( self:LocalToWorld(Vector(0,0,62)) ) > 50  and self:GetSequence() != gearup then
+=======
+		if self.controls.throttle>0.9 and self.rotorRpm>0.8 and phys:GetVelocity():Length() > 1299 and trace.HitPos:Distance( self:LocalToWorld(Vector(0,0,62)) ) > 50  and self:GetSequence() != gearup then
+>>>>>>> beta
 			self:ResetSequence(gearup) 
 			self:SetPlaybackRate(1.0)
 			self:SetBodygroup(2,1)
 			for i=1,3 do 
+<<<<<<< HEAD
 				self.Wheels[i]:SetRenderMode(RENDERMODE_TRANSALPHA)
 				self.Wheels[i]:SetColor(Color(255,255,255,0))
 				self.Wheels[i]:SetSolid(SOLID_NONE)
@@ -68,6 +94,21 @@ function ENT:CustomPhysicsUpdate(ph)
 						self.Wheels[i]:SetRenderMode(RENDERMODE_NORMAL)
 						self.Wheels[i]:SetColor(Color(255,255,255,255))
 						self.Wheels[i]:SetSolid(SOLID_VPHYSICS)
+=======
+				self.wheels[i]:SetRenderMode(RENDERMODE_TRANSALPHA)
+				self.wheels[i]:SetColor(Color(255,255,255,0))
+				self.wheels[i]:SetSolid(SOLID_NONE)
+			end
+		elseif self.controls.throttle<0.6 and trace.HitPos:Distance( self:LocalToWorld(Vector(0,0,62)) ) > 50  and self:GetSequence() == gearup then
+			self:ResetSequence(geardown)
+			self:SetPlaybackRate(1.0)
+			timer.Simple(t1,function()
+				if self.wheels then
+					for i=1,3 do
+						self.wheels[i]:SetRenderMode(RENDERMODE_NORMAL)
+						self.wheels[i]:SetColor(Color(255,255,255,255))
+						self.wheels[i]:SetSolid(SOLID_VPHYSICS)
+>>>>>>> beta
 					end
 					self:SetBodygroup(2,0)
 				end
@@ -76,6 +117,7 @@ function ENT:CustomPhysicsUpdate(ph)
 	end
 end
 
+<<<<<<< HEAD
 
 function ENT:AddRotor()
 	self.TopRotor = ents.Create("prop_physics")
@@ -122,4 +164,9 @@ function ENT:AddRotor()
 		self:AddOnRemove(e)
 		self.EngineWeight.Entity = e
 	end
+=======
+function ENT:addRotors()
+    self:base("wac_pl_base").addRotors(self)
+    self.rotorModel.TouchFunc = function() end
+>>>>>>> beta
 end
