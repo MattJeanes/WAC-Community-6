@@ -17,3 +17,4 @@ In this pack you will find:
 • F-16C Falcon
 • F/A-18F Super Hornet
 • AH-1W Super Cobra
+• Fw 190A-5 Würger
