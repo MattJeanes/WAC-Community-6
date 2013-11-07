@@ -74,3 +74,8 @@ function ENT:PhysicsUpdate(ph)
 		end
 	end
 end
+
+function ENT:addRotors()
+    self:base("wac_pl_base").addRotors(self)
+    self.rotorModel.TouchFunc = function() end
+end

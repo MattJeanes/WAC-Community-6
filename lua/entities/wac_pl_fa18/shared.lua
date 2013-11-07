@@ -97,9 +97,6 @@ ENT.Sounds={
 // heatwave
 if CLIENT then
 	local cureffect=0
-	function ENT:Initialize()
-		self:base("wac_pl_base").Initialize(self)
-	end
 	function ENT:Think()
 		self:base("wac_pl_base").Think(self)
 		
