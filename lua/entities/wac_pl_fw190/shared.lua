@@ -59,6 +59,10 @@ ENT.Seats = {
 	},
 }
 
+ENT.Agility = {
+	Thrust = 15
+}
+
 ENT.Weapons = {
 	["MG17"] = {
 		class = "wac_pod_gatling",
