@@ -58,7 +58,7 @@ ENT.Seats = {
 	{
 		pos=Vector(130,0,70),
 		exit=Vector(130,70,20),
-		weapons={"M61 Vulcan"}
+		weapons={"M61 Vulcan", "Hydra 70"}
 	}
 }
 
@@ -73,6 +73,17 @@ ENT.Weapons = {
 			Sounds = {
 				shoot = "WAC/f16/gun.wav",
 				stop = "WAC/f16/gun_stop.wav"
+			}
+		}
+	},
+	
+	["Hydra 70"] = {
+		class = "wac_pod_hydra",
+		info = {
+			Sequential = true,
+			Pods = {
+				Vector(-31.54,155.64,56.31),
+				Vector(-31.54,-155.64,56.31)
 			}
 		}
 	},
