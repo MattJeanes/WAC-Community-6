@@ -102,22 +102,25 @@ if CLIENT then
 		
 		local throttle = self:GetNWFloat("up", 0)
 		local active = self:GetNWBool("active", false)
-		local ent=LocalPlayer():GetVehicle():GetNWEntity("wac_aircraft")
-		if ent==self and active and throttle > 0.5 and CurTime()>cureffect then
-			cureffect=CurTime()+0.01
-			local ed=EffectData()
-			ed:SetEntity(self)
-			ed:SetOrigin(Vector(-345,8,90)) // offset
-			ed:SetMagnitude(throttle)
-			ed:SetRadius(30)
-			util.Effect("wac_afterburner", ed)
-			
-			local ed=EffectData()
-			ed:SetEntity(self)
-			ed:SetOrigin(Vector(-345,45,90)) // offset
-			ed:SetMagnitude(throttle)
-			ed:SetRadius(30)
-			util.Effect("wac_afterburner", ed)
+		local v=LocalPlayer():GetVehicle()
+		if IsValid(v) then
+			local ent=v:GetNWEntity("wac_aircraft")
+			if ent==self and active and throttle > 0.5 and CurTime()>cureffect then
+				cureffect=CurTime()+0.01
+				local ed=EffectData()
+				ed:SetEntity(self)
+				ed:SetOrigin(Vector(-345,8,90)) // offset
+				ed:SetMagnitude(throttle)
+				ed:SetRadius(30)
+				util.Effect("wac_afterburner", ed)
+				
+				local ed=EffectData()
+				ed:SetEntity(self)
+				ed:SetOrigin(Vector(-345,45,90)) // offset
+				ed:SetMagnitude(throttle)
+				ed:SetRadius(30)
+				util.Effect("wac_afterburner", ed)
+			end
 		end
 	end
 end
